@@ -30,4 +30,19 @@ describe("TodoList Contract", () => {
     expect(task.content).to.equal("Task Content");
     expect(task.completed).to.equal(false);
   });
+  it("should mark a task as completed", async () => {
+    await todoList.addTask("Task Header", "Task Content");
+    await todoList.toggleCompleted(0);
+    const task = await todoList.tasks(0);
+
+    expect(task.completed).to.equal(true);
+  });
+
+  it("should edit the task header and task content", async () => {
+    await todoList.addTask("Task Header", "Task Content");
+    await todoList.editTask(0, "New Task Header", "new content");
+    const task = await todoList.tasks(0);
+
+    expect(task.header).to.equal("New Task Header");
+  });
 });
