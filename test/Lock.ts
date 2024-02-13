@@ -5,28 +5,29 @@ import {
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { ContractTransactionResponse } from "ethers";
+import { TodoList } from "../typechain-types";
 
-describe("TodoList", function () {
-  async function deployTodoList() {
-    // Contracts are deployed using the first signer/account by default
-    const [owner, otherAccount] = await ethers.getSigners();
+describe("TodoList Contract", () => {
+  let todoList: TodoList & {
+    deploymentTransaction(): ContractTransactionResponse;
+  };
 
+  beforeEach(async () => {
     const TodoList = await ethers.getContractFactory("TodoList");
-    const todoList = await TodoList.deploy();
+    todoList = (await TodoList.deploy()) as TodoList & {
+      deploymentTransaction(): ContractTransactionResponse;
+    };
+    await todoList.deploymentTransaction();
+  });
 
-    return { todoList };
-  }
+  it("should add a new task", async () => {
+    await todoList.addTask("Task Header", "Task Content");
+    const task = await todoList.tasks(0);
 
-  describe("AddTask", function () {
-    it("Should update the todo list", async function () {
-      const { todoList } = await loadFixture(deployTodoList);
-
-      const Lists = await todoList.addTask("header,todo,false", () => todoList.);
-      const name = await todoList.getName();
-
-      expect(name).to.equal("John");
-
-      expect(todoList).to.equal("");
-    });
+    expect(task.id).to.equal(0);
+    expect(task.header).to.equal("Task Header");
+    expect(task.content).to.equal("Task Content");
+    expect(task.completed).to.equal(false);
   });
 });

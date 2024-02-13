@@ -12,13 +12,13 @@ contract TodoList {
     TodoTask[] public tasks;
 
     // Function to add a new task
-    function addTask(string memory _header, string memory _content) public {
+    function addTask(string memory _header, string memory _content) external {
         uint id = tasks.length;
         tasks.push(TodoTask(id, _header, _content, false));
     }
 
     // Function to mark a task as completed
-    function toggleCompleted(uint _id) public {
+    function toggleCompleted(uint _id) external {
         require(_id < tasks.length, "Task not found");
         tasks[_id].completed = !tasks[_id].completed;
     }
@@ -28,7 +28,7 @@ contract TodoList {
         uint _id,
         string memory _newHeader,
         string memory _newContent
-    ) public {
+    ) external {
         require(_id < tasks.length, "Task not found");
         tasks[_id].header = _newHeader;
         tasks[_id].content = _newContent;
