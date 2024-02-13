@@ -30,6 +30,7 @@ describe("TodoList Contract", () => {
     expect(task.content).to.equal("Task Content");
     expect(task.completed).to.equal(false);
   });
+
   it("should mark a task as completed", async () => {
     await todoList.addTask("Task Header", "Task Content");
     await todoList.toggleCompleted(0);

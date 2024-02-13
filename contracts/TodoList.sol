@@ -2,19 +2,17 @@
 pragma solidity ^0.8.0;
 
 contract TodoList {
-    struct TodoTask {
-        uint id;
+    struct Todo {
         string header;
         string content;
         bool completed;
     }
     // Store Tasks in dynamic array
-    TodoTask[] public tasks;
+    Todo[] public tasks;
 
     // Function to add a new task
     function addTask(string memory _header, string memory _content) external {
-        uint id = tasks.length;
-        tasks.push(TodoTask(id, _header, _content, false));
+        tasks.push(Todo(_header, _content, false));
     }
 
     // Function to mark a task as completed
@@ -34,7 +32,6 @@ contract TodoList {
         tasks[_id].content = _newContent;
     }
 
-    //deleteTask de;eetese the inputed id
     function deleteTask(uint _id) public {
         delete tasks[_id];
     }
