@@ -33,4 +33,8 @@ contract TodoList {
         tasks[_id].header = _newHeader;
         tasks[_id].content = _newContent;
     }
+
+    function deleteTask(uint _id) public {
+        delete tasks[_id];
+    }
 }
