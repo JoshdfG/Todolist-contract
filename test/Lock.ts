@@ -45,6 +45,7 @@ describe("TodoList Contract", () => {
 
     expect(task.header).to.equal("New Task Header");
   });
+
   it("should throw an error when editing a non-existent task", async () => {
     await expect(
       todoList.editTask(999, "New Task Header", "New task descriptio")
